@@ -1,0 +1,53 @@
+<?php if(Mage::getStoreConfig('customcontact_options/general/enabled') == 1):?>
+<?php $postData = Mage::getSingleton('customer/session')->getPostData();?> 
+<div>
+  <form id="simple_contact_form" name="simple_contact_form" action="<?php echo $this->getActionOfForm()?>" method="post">
+	<fieldset>
+            <h4>Custom Contact Form</h4>
+		<ul>
+                    <li>
+			<div class="field">
+                            <label for="name" class="required"><em>*</em><?php echo Mage::helper('customcontact')->__('Name') ?></label>
+                            <div class="input-box">
+                                <input type="text" id="name" name="name" value="<?php echo $postData['name'];?>" title="<?php echo Mage::helper('customcontact')->__('Name') ?>" maxlength="255" class="input-text required-entry">
+                            </div>
+                        </div>
+                        
+                        <div class="field">
+                            <label for="email" class="required"><em>*</em><?php echo Mage::helper('customcontact')->__('Email') ?></label>
+                            <div class="input-box">
+                                <input type="email" autocapitalize="off" autocorrect="off" spellcheck="false" name="email" id="email" value="<?php echo $postData['email'];?>" title="<?php echo Mage::helper('customcontact')->__('Email') ?>" class="input-text validate-email required-entry">
+                            </div>
+                        </div>
+                        
+                        <div class="field">
+                            <label for="mobile_number"><?php echo Mage::helper('customcontact')->__('Mobile Number') ?></label>
+                            <div class="input-box">
+                                <input type="text" id="mobile_number" name="mobile_number" value="<?php echo $postData['mobile_number'];?>" title="<?php echo Mage::helper('customcontact')->__('Mobile Number') ?>" maxlength="255" class="input-text validate-phoneLax">
+                            </div>
+                        </div> 
+                        
+                        <div class="field">
+                            <label for="queries" class="required"><em>*</em><?php echo Mage::helper('customcontact')->__('Query/Note') ?></label>
+                            <div class="input-box">
+                                <textarea name="queries" id="queries" title="<?php echo Mage::helper('customcontact')->__('Query/Note') ?>" style="height:100px;" cols="50" rows="3" class="required-entry"></textarea>
+                            </div>
+                        </div>                      
+                        
+                    </li>
+		</ul>
+	</fieldset>
+        <div class="buttons-set">
+	    <button title="Submit" class="button" type="submit"><span><span>Submit</span></span></button>
+	</div>
+    </form>
+</div> 
+<script type="text/javascript">
+    //<![CDATA[
+        var contactForm= new VarienForm('simple_contact_form', true); //For validation
+       
+    //]]>
+
+</script>
+
+<?php endif; ?>

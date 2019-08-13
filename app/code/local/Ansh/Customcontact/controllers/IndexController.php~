@@ -1,0 +1,68 @@
+<?php
+class Ansh_CustomContact_IndexController extends Mage_Core_Controller_Front_Action
+{
+        
+    /*const XML_PATH_EMAIL_ADMIN_SENDER	 		= 'customcontact/anshemail/email_admin_sender';
+    const XML_PATH_EMAIL_CUSTOMER_SENDER		= 'customcontact/anshemail/email_customers_sender';
+    const XML_PATH_RECEPTION_EMAIL_ADMIN		= 'customcontact/anshemail/recipient_admin_email';
+    const XML_PATH_EMAIL_ADMIN_TEMPLATE	 		= 'customcontact/anshemail/email_admin_template';
+    const XML_PATH_EMAIL_CUSTOMER_TEMPLATE		= 'customcontact/anshemail/email_customers_template';*/
+    
+    public function indexAction()
+    {
+		$this->loadLayout();     
+		$this->renderLayout();
+    }
+public function createContactAction() {   
+          
+ 
+        $data = array(
+                'name' => $this->getRequest()->getParam('name'),
+                'email' => $this->getRequest()->getParam('email'),
+                'mobile_number' => $this->getRequest()->getParam('mobile_number'),  
+                'queries' => $this->getRequest()->getParam('queries'), 
+                'created_time' => strtotime('now'),
+                'update_time' => strtotime('now')      
+            );   
+       
+             
+        Mage::getSingleton('customer/session')->setMyData($data);
+
+            $model = Mage::getModel('customcontact/customcontact')->setData($data); //addData
+            try {
+                $insertId = $model->save()->getId();
+                if($insertId)
+                {
+                    $sender_name = Mage::getStoreConfig('trans_email/ident_general/name');                    
+                    $sender_email = Mage::getStoreConfig('trans_email/ident_general/email');
+                    
+                     //Send email to admin
+                    $template_id = 'customcontact_email_setting_email_admin_template';
+                    $email_to = Mage::getStoreConfig('trans_email/ident_general/email');                                
+                    $email_template  = Mage::getModel('core/email_template')->loadDefault($template_id);
+                    $email_template->setSenderName($sender_name);
+                    $email_template->setSenderEmail($sender_email); 
+                    $email_template->send($email_to, $data);
+                    
+                    //Send email to customer
+                    $template_id = 'customcontact_email_setting_email_customers_template';                    
+                    $email_to = $this->getRequest()->getParam('email');                                
+                    $email_template  = Mage::getModel('core/email_template')->loadDefault($template_id);                    
+                    $email_template->setSenderName($sender_name);
+                    $email_template->setSenderEmail($sender_email); 
+                    $email_template->send($email_to, $data);  
+                }
+                $message1 = $this->__("Your inquiry was submitted and will be responded to as soon as possible. Thank you for contacting us!!!");
+                Mage::getSingleton('core/session')->addSuccess($message1);
+               
+            } catch (Exception $e) {
+                $message2 = $this->__($e->getMessage());
+                Mage::getSingleton('core/session')->addError($message2);
+
+            }
+            
+        $this->_redirect('customcontact/');
+    }
+
+}
+    

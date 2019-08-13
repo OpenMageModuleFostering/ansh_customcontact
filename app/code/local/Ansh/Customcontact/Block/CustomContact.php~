@@ -1,0 +1,30 @@
+<?php
+class Ansh_CustomContact_Block_CustomContact extends Mage_Core_Block_Template
+{
+	
+	protected $_Collection=null;
+	public function getCollection(){
+		if(is_null($this->_Collection)){
+			$this->_Collection=Mage::getModel('customcontact/customcontact')->getCollection();
+		}
+		return $this->_Collection;
+	}
+	public function getActionOfForm()
+	{
+		return $this->getUrl('customcontact/index/createContact');
+	}
+	/* 	
+	public function _prepareLayout()
+    {
+		return parent::_prepareLayout();
+    }
+    
+     public function getCustomcontact()     
+     { 
+        if (!$this->hasData('customcontact')) {
+            $this->setData('customcontact', Mage::registry('customcontact'));
+        }
+        return $this->getData('customcontact');
+        
+    } */
+}

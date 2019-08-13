@@ -1,0 +1,16 @@
+{
+    "name": "OpenMageModuleFostering/Ansh_Customcontact",
+    "type": "magento-module",
+    "license": "OSL-v3.0",
+    "homepage": "",
+    "description": "Custom Contacts is a powerful and robust extension to integrate a contact form to your site with ease. ",
+    "authors": [
+    {
+        "name": "Ansh",
+        "email": "MagentoAnshsystem@gmail.com"
+    }
+],
+    "suggest": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}

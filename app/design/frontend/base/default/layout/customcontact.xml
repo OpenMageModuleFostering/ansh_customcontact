@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+        
+    <customcontact_index_index>
+	<reference name="content">
+            <block type="customcontact/customcontact" name="customcontact" template="customcontact/customcontact.phtml" />
+	</reference>
+    </customcontact_index_index>
+</layout>
